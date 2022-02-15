@@ -1,6 +1,17 @@
 <h1>KelloggCoin Ledger</h1>
 
 <!-- Step 1: List all transaction, starting with the ICO -->
+<ol>
+    <% for transaction in Transaction.all %>
+    <li> 
+        <% if transaction.from_user %>
+        <%= transaction.amount %> from <%= transaction.from_user.name %> to <%= transaction.to_user.name %>
+        <% else %>
+        ICO: <%= transaction.amount %> to <%= transaction.to_user.name %>
+        <% end %>
+    </li> 
+    <% end %>
+</ol>
 
 <!-- Step 2: Calculate and display the balances -->
 
