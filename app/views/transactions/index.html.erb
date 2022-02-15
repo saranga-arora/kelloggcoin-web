@@ -5,15 +5,27 @@
     <% for transaction in Transaction.all %>
     <li> 
         <% if transaction.from_user %>
-        <%= transaction.amount %> from <%= transaction.from_user.name %> to <%= transaction.to_user.name %>
+        <%= transaction.amount %> KC from <%= transaction.from_user.name %> to <%= transaction.to_user.name %>
         <% else %>
-        ICO: <%= transaction.amount %> to <%= transaction.to_user.name %>
+        Initial coin offering: <%= transaction.amount %> to <%= transaction.to_user.name %> KC
         <% end %>
     </li> 
     <% end %>
 </ol>
 
 <!-- Step 2: Calculate and display the balances -->
+<h1>Account Totals</h1>
+
+<ul>
+<% for user in User.all %> 
+    <%
+    balance = 0
+    balance = balance + Transaction.where({to_user_id: user.id }).sum(:amount)
+    balance = balance - Transaction.where({from_user_id: user.id}).sum(:amount)
+    %>
+    <li> Balance for <%= user.name %>: <%= balance %> KC </li>
+<% end %>
+</ul>
 
 <!-- 
 Expected balances:
